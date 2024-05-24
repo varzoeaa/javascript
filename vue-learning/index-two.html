@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en", class="h-full">
+    <head>
+        <meta charset="utf-8">
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        
+    </head>
+
+
+    <body class="h-full flex justify-center items-center">          <!-- Tailwind CSS classes https://tailwindcss.com/docs -->
+    
+        <div id="app">
+
+            <app-button>Submit</app-button>
+          
+
+        </div>
+        
+
+        <script>
+
+            let app = {
+                components: {
+                    'app-button': {
+                        mounted() {
+                            alert('hello')
+                        },
+
+                        data() {
+                            return {
+                                processing: false
+                            }
+                        },
+
+                        template:  `
+                            <button class="bg-gray-200 hover:bg-gray-400 rounded border px-5 py-2 siabled:cursor-not-allowed" 
+                                           :disbaled = "processing"> 
+                                <slot />
+                            </button>
+                        `
+                    }, 
+                }
+            };
+
+
+
+            let AppButton = {};
+            let AssignmentList = {};
+            let AssignmentListItem = {};
+
+            Vue.createApp(app).mount('#app')
+        </script>
+
+
+
+    </body>
+</html>

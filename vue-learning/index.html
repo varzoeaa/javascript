@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3"></script>
+        <style>
+            html, body {
+                height: 100%;
+            }
+
+            body {
+                display: flex;                  
+                justify-content: center;
+                align-items: center;            /* this us how we center with flex (center of page) */        
+            }
+
+            .text-red {
+                color: red;
+            }
+
+            .text-green {
+                color: green;
+            }
+
+        </style>
+    </head>
+
+
+    <body>
+    
+        <div id="app">
+            <p>
+                <input type="text" v-model="greeting">          <!-- this is how we bind the input to the greeting, with v-model -->
+            </p>
+
+
+            <p> 
+                {{ greeting }} ({{ greeting.length}})       <!-- this is how we display the greeting -->
+            </p>
+
+            <button :class="active ? 'text-green' : 'text-red'" v-on:click="toggle">           <!-- v-bind is a directive that binds the class to the buttonClasses -->
+                Click me                                                                <!-- v-on is a directive that listens for an event, in this case a click -->
+            </button>
+
+        </div>
+        
+
+        <script>
+            Vue.createApp({
+
+                data() {
+                    return {
+                        greeting: 'Hello World!',                   // this is the data that we are going to display
+                        active: false
+                    };
+                },
+
+                methods: {
+                    toggle() {
+                        this.active = !this.active;
+                    }
+                },
+
+                mounted() {
+                    /* setTimeout( () => {                         // this is a function that will change the greeting after 3 milliseconds
+                        this.greeting = 'Changed the greeting.'
+                    }, 3000)     // 3 milliseconds    */
+                }
+            }).mount('#app')
+        </script>
+
+
+
+    </body>
+
+
+
+
+</html>
