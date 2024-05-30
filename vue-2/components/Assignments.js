@@ -1,46 +1,68 @@
 import AssignmentList from "./AssignmentList.js"
+import AssignmentCreate from "./AssignmentCreate.js";
 
 export default {
-    components : {AssignmentList},
+    components : {
+        AssignmentList,
+        AssignmentCreate
+    },
 
     template: `
 
-    <assignment-list 
-            :assignments="inProgressAssignments"
-            title="In Progress">
-    </assignment-list>
+    <section class="flex gap-8">    <!-- space-y-6 is a tailwind class -->
 
     <assignment-list 
-            :assignments="completedAssignments"
-            title="Completed">
+            :assignments="filters.inProgress"
+            title="In Progress">
+            <assignment-create @add="add"></assignment-create>
     </assignment-list>
+
+    <div v-show="showCompleted">
+        <assignment-list 
+                :assignments="filters.completed"
+                title="Completed"
+                can-toggle
+                @toggle="showCompleted = !showCompleted">
+        </assignment-list>
+    </div>
+
+
+    </section>
     `,
 
-    
     data() {
         return {
-            assignments: [
-                {id: 1, name: 'Finish project', complete: false},
-                {id: 2, name: 'Turn in homework', complete: false},
-                {id:3, name: 'Read chapter 4', complete: false}
-            ]
+            assignments: [],
+            showCompleted: true
         };
     },
 
-    methods: {
-        toggle() {
-            assignments.complete = !assignments.complete;
-        }
-    },
+    created() {
+        fetch('http://localhost:3000/assignments')
+            .then(response => response.json())
+            .then(assignments => {
+                this.assignments = assignments;
+            });
+    },  
 
     computed: {
-
-        inProgressAssignments() {
-            return this.assignments.filter(assignment => !assignment.complete);
+        filters() {
+            return {
+                inProgress: this.assignments.filter(assignment => !assignment.complete),
+                completed: this.assignments.filter(assignment => assignment.complete),
+            };
         },
+    },
 
-        completedAssignments() {
-            return this.assignments.filter(assignment => assignment.complete);
+    methods: 
+    {
+        add(name) {
+            this.assignments.push({
+                id: this.assignments.length + 1,
+                name: name,
+                complete: false
+            });
         }
-    }
+
+    },
 }

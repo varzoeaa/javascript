@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue - NetNinja</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .box{
+            padding: 200px 0;
+            width: 450px;
+            text-align:center;
+            background: #ddd;
+            margin: 20px;
+            display: inline-block;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <h1>Hello World!</1>
+
+    <div id="app">
+
+        <div v-if="showBooks">      <!-- removes from dom if false -->
+          
+            <ul>
+                <li v-for="book in books" >
+                   <h3>{{ book.title }}</h3> 
+                   <p>by {{ book.author }} </p>
+                </li>
+            </ul>
+
+        </div>
+
+        <a :href="url">search on google</a>
+        <br>
+        <br>
+
+        <button @click="toggleShowBooks">
+            <span v-if="showBooks">Hide books</span>
+            <span v-if="!showBooks">Show Books</span>  <!-- v-else -->
+        </button>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
